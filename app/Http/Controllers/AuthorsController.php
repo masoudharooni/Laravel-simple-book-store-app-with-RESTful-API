@@ -16,7 +16,7 @@ class AuthorsController extends Controller
      */
     public function index()
     {
-        //
+        return AuthorsResource::collection(Author::paginate(10));
     }
 
     /**
@@ -37,7 +37,8 @@ class AuthorsController extends Controller
      */
     public function store(StoreAuthorRequest $request)
     {
-        //
+        $author = Author::create($request->validated());
+        return (new AuthorsResource($author));
     }
 
     /**
