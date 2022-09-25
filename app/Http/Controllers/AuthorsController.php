@@ -72,7 +72,10 @@ class AuthorsController extends Controller
      */
     public function update(UpdateAuthorRequest $request, Author $author)
     {
-        //
+        $author->update([
+            'name' => ($request->validated())['name']
+        ]);
+        return (new AuthorsResource($author));
     }
 
     /**
