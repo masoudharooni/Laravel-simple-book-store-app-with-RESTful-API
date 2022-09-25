@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
+use App\Http\Resources\BooksResource;
 
 class BooksController extends Controller
 {
@@ -15,7 +16,7 @@ class BooksController extends Controller
      */
     public function index()
     {
-        //
+        return BooksResource::collection(Book::paginate(10));
     }
 
     /**
@@ -47,7 +48,7 @@ class BooksController extends Controller
      */
     public function show(Book $book)
     {
-        //
+        return (new BooksResource($book));
     }
 
     /**
@@ -70,7 +71,13 @@ class BooksController extends Controller
      */
     public function update(UpdateBookRequest $request, Book $book)
     {
-        //
+        $validatedData = $request->validated();
+        $book->update([
+            'name' => $validatedData['name'],
+            'description' => $validatedData['description'],
+            'publication_year' => $validatedData['publication_year'],
+        ]);
+        return (new BooksResource($book));
     }
 
     /**

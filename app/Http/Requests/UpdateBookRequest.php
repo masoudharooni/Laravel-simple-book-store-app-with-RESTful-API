@@ -13,7 +13,7 @@ class UpdateBookRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class UpdateBookRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|string|min:3',
+            'description' => 'required|string|min:3',
+            'publication_year' => 'required|string|regex:/^[0-9]{4}$/'
         ];
     }
 }
